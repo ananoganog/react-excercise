@@ -11,7 +11,8 @@ interface Props {
 // We define members as a state (the compoment holding this will be a container
 // component)
 interface State {
-  members: Array<MemberEntity>
+  members: Array<MemberEntity>,
+  organizationName: string,
 }
 
 // Nice tsx guide: https://github.com/Microsoft/TypeScript/wiki/JSX
@@ -20,11 +21,14 @@ export class MembersTableComponent extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     // set initial state
-    this.state = { members: [] };
+    this.state = {
+      members: [],
+      organizationName: 'lemoncode',
+    };
   }
 
   loadMembers = () => {
-    memberAPI.getAllMembers('lemoncode').then((members) =>
+    memberAPI.getAllMembers(this.state.organizationName).then((members) =>
       this.setState({ members: members })
     );
   }
