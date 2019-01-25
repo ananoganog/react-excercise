@@ -3,9 +3,11 @@ import { MemberEntity } from '../../model/member';
 import { memberAPI } from '../../api/memberAPI';
 import { MemberRow } from './memberRow';
 import { MemberHead } from './memberHead';
+import {OrganizationNameEditComponent} from '../organizationNameEdit';
 import {} from 'core-js';
 
 interface Props {
+  initialOrganizationName: string;
 }
 
 // We define members as a state (the compoment holding this will be a container
@@ -23,7 +25,7 @@ export class MembersTableComponent extends React.Component<Props, State> {
     // set initial state
     this.state = {
       members: [],
-      organizationName: 'lemoncode',
+      organizationName: this.props.initialOrganizationName,
     };
   }
 
@@ -33,12 +35,25 @@ export class MembersTableComponent extends React.Component<Props, State> {
     );
   }
 
+  updateOrganizationNameState = (organizationName : string) => {
+    this.setState({ organizationName });
+  }
+
+
   public render() {
 
     return (
       <div className="row">
         <h2> Members Page</h2>
-        <button onClick={this.loadMembers}>Load</button>
+        <OrganizationNameEditComponent
+          organizationName={this.state.organizationName}
+          onValueUpdated={this.updateOrganizationNameState}
+        />
+        <button
+          onClick={this.loadMembers}
+          disabled={this.state.organizationName === ''}
+        >
+        Load</button>
         <table className="table">
           <thead>
             <MemberHead />

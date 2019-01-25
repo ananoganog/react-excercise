@@ -4,16 +4,22 @@ import {MembersTableComponent} from './components';
 interface Props {
 }
 
-export class App extends React.Component<Props> {
+interface State {
+  organizationName: string;
+}
+
+export class App extends React.Component<Props, State> {
+
   constructor(props: Props) {
     super(props);
-
+    this.state = { organizationName: 'lemoncode' };
   }
+
 
   public render() {
     return (
       <>
-        <MembersTableComponent/>
+        <MembersTableComponent initialOrganizationName={this.state.organizationName} />
       </>
     );
   }
